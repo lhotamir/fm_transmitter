@@ -41,6 +41,7 @@
 
 #define MAX_STREAM_SIZE 2097152
 #define STREAM_SAMPLE_RATE 22050
+#define STREAM_SAMPLE_RATE2 44100
 #define STREAM_BITS_PER_SAMPLE 16
 #define STREAM_CHANNELS 1
 
@@ -53,7 +54,7 @@ class StdinReader
 
         pthread_t thread;
         vector<float>* getFrames(unsigned frameCount, bool &forceStop);
-        AudioFormat* getFormat();
+        AudioFormat* getFormat(bool sample441);
 
         static StdinReader* getInstance();
     private:

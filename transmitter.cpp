@@ -102,7 +102,7 @@ Transmitter* Transmitter::getInstance()
     return &instance;
 }
 
-void Transmitter::play(string filename, double frequency, bool loop)
+void Transmitter::play(string filename, double frequency, bool loop, bool sample441)
 {
     if (isTransmitting) {
         throw ErrorReporter("Cannot play, transmitter already in use");
@@ -119,7 +119,7 @@ void Transmitter::play(string filename, double frequency, bool loop)
         format = file->getFormat();
     } else {
         stdin = StdinReader::getInstance();
-        format = stdin->getFormat();
+        format = stdin->getFormat(sample441);
         usleep(STDIN_READ_DELAY);
     }
 
@@ -265,7 +265,7 @@ void* Transmitter::transmit(void* params)
     return NULL;
 }
 
-AudioFormat* Transmitter::getFormat(string filename)
+AudioFormat* Transmitter::getFormat(string filename, bool sample441)
 {
     WaveReader* file;
     StdinReader* stdin;
@@ -277,7 +277,7 @@ AudioFormat* Transmitter::getFormat(string filename)
         delete file;
     } else {
         stdin = StdinReader::getInstance();
-        format = stdin->getFormat();
+        format = stdin->getFormat(sample441);
     }
 	
     return format;

@@ -52,6 +52,7 @@ int main(int argc, char** argv)
 {
     double frequency = 100.0;
     bool loop = false;
+    bool sample441 = false;
     string filename;
 
     bool showUsage = true;
@@ -63,6 +64,8 @@ int main(int argc, char** argv)
             }
         } else if (string("-r") == argv[i]) {
             loop = true;
+        } else if (string("-F") == argv[i]){
+            sample441 = true;
         } else {
             if (i == argc - 1) {
                 showUsage = false;
@@ -80,14 +83,14 @@ int main(int argc, char** argv)
     try {
         transmitter = Transmitter::getInstance();
 
-        AudioFormat* format = Transmitter::getFormat(filename);
+        AudioFormat* format = Transmitter::getFormat(filename, sample441);
         cout << "Playing: " << ((filename != "-") ? filename : "stdin") << ", "
              << format->sampleRate << " Hz, "
              << format->bitsPerSample << " bits, "
              << ((format->channels > 0x01) ? "stereo" : "mono") << endl;
         delete format;
 
-        transmitter->play(filename, frequency, loop);
+        transmitter->play(filename, frequency, loop, sample441);
     } catch (exception &error) {
         cout << "Error: " << error.what() << endl;
         return 1;

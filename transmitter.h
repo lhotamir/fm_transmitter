@@ -49,11 +49,11 @@ class Transmitter
     public:
         virtual ~Transmitter();
 
-        void play(string filename, double frequency, bool loop);
+        void play(string filename, double frequency, bool loop, bool sample441);
         void stop();
 
 	static Transmitter* getInstance(); 
-        static AudioFormat* getFormat(string filename);
+        static AudioFormat* getFormat(string filename, bool sample441);
     private:
         Transmitter();
 

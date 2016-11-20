@@ -156,10 +156,10 @@ vector<float>* StdinReader::getFrames(unsigned frameCount, bool &forceStop)
     return frames;
 }
 
-AudioFormat* StdinReader::getFormat()
+AudioFormat* StdinReader::getFormat(bool sample441 = false)
 {
     AudioFormat* format = new AudioFormat;
-    format->sampleRate = STREAM_SAMPLE_RATE;
+    format->sampleRate = sample441 ? STREAM_SAMPLE_RATE2 : STREAM_SAMPLE_RATE;
     format->bitsPerSample = STREAM_BITS_PER_SAMPLE;
     format->channels = STREAM_CHANNELS;
     return format;
